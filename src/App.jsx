@@ -12,7 +12,6 @@ export const App = () => {
           <Route path='registro' element={<Register />} />
           <Route path='olvide-pass' element={<ResetPassword />} />
           <Route path='olvide-pass/:token' element={<NewPassword />} />
-          <Route path='olvide-pass/:token' element={<NewPassword />} />
           <Route path='confirmar/:id' element={<ConfirmAccount />} />
           
           <Route path='*' element={<Navigate to='/' replace />} />
