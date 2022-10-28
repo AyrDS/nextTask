@@ -52,7 +52,7 @@ export const Login = () => {
             </Link>
 
             <Link
-               to='/registro'
+               to='/olvide-pass'
                className='block text-center my-5 lg:my-2 text-slate-500 uppercase text-sm hover:text-slate-700'
             >
                ¿No puedes iniciar sesión?
