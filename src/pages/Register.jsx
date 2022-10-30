@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export const Register = () => {
 
-   const { handleChange, name, email, password, password2 } = useForm({
+   const { name, email, password, password2, handleChange, resetForm } = useForm({
       name: '',
       email: '',
       password: '',
@@ -62,6 +62,8 @@ export const Register = () => {
             icon: 'success',
             confirmButtonColor: '#0369a1'
          });
+
+         resetForm();
       } catch (error) {
          Swal.fire({
             title: 'Error',
