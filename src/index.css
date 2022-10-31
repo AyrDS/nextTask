@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.timer {
+   background: #0369a1;
+   height: 6px;
+}
