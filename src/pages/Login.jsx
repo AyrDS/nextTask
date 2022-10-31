@@ -4,11 +4,13 @@ import useForm from '../hooks/useForm';
 import Swal from 'sweetalert2';
 import useAuth from '../hooks/useAuth';
 
+const initialFormLogin = {
+   email: '',
+   password: '',
+}
+
 export const Login = () => {
-   const { handleChange, email, password } = useForm({
-      email: '',
-      password: '',
-   });
+   const { handleChange, email, password } = useForm(initialFormLogin);
    const navigate = useNavigate();
    const { setAuth } = useAuth();
 

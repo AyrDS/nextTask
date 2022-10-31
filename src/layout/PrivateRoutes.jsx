@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 export const PrivateRoutes = () => {
    const { auth, isLoading } = useAuth();
    const { uid } = auth;
+   const token = localStorage.getItem('token') || null;
 
    if (isLoading) {
       return <Loader />
@@ -13,7 +14,7 @@ export const PrivateRoutes = () => {
    return (
       <>
          {
-            uid
+            uid && token
                ? (
                   <div className='bg-gray-100' >
                      <Header />

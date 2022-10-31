@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import clientAxios from '../config/clientAxios';
+import useAuth from '../hooks/useAuth';
 
 export const ProjectsContext = createContext();
 const { Provider } = ProjectsContext;
@@ -9,6 +10,8 @@ const { Provider } = ProjectsContext;
 export const ProjectsProvider = ({ children }) => {
 
    const navigate = useNavigate();
+   const { auth } = useAuth();
+
    const [projects, setProjects] = useState([]);
    const [project, setProject] = useState({});
 
@@ -33,7 +36,7 @@ export const ProjectsProvider = ({ children }) => {
       }
 
       getProjects();
-   }, []);
+   }, [auth]);
 
    const editProject = async project => {
       Swal.showLoading();
@@ -143,14 +146,54 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
+   const deleteProject = async id => {
+      Swal.showLoading();
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         await clientAxios.delete(`/projects/${id}`, config);
+
+         const projectsUpdated = projects.filter(projectState => projectState._id !== id);
+         setProjects(projectsUpdated);
+
+         Swal.fire({
+            title: 'Proyecto Eliminado',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            timerProgressBar: true,
+            customClass: {
+               timerProgressBar: 'timer'
+            }
+         });
+
+         setTimeout(() => {
+            navigate(`/proyectos`);
+         }, 2001);
+      } catch (error) {
+
+      }
+   }
+
    return (
       <Provider
          value={{
-            projects,
             project,
-            newProject,
-            getProject,
+            projects,
+            deleteProject,
             editProject,
+            getProject,
+            newProject,
          }}
       >
          {children}
