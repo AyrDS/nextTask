@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import { Loader } from '../components';
+import { Header, Loader, Sidebar } from '../components';
 import useAuth from '../hooks/useAuth';
 
 export const PrivateRoutes = () => {
@@ -14,7 +14,19 @@ export const PrivateRoutes = () => {
       <>
          {
             uid
-               ? <Outlet />
+               ? (
+                  <div className='bg-gray-100' >
+                     <Header />
+
+                     <div className='md:flex md:min-h-screen' >
+                        <Sidebar />
+
+                        <main className='p-10 flex-1' >
+                           <Outlet />
+                        </main>
+                     </div>
+                  </div>
+               )
                : <Navigate replace to='/' />
          }
       </>

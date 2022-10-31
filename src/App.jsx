@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Loader } from './components';
 import { AuthLayout, PrivateRoutes } from './layout';
-import { Login, Register, NewPassword, ResetPassword, ConfirmAccount, Projects } from './pages';
+import { Login, Register, NewPassword, ResetPassword, ConfirmAccount, Projects, NewProject } from './pages';
 import useAuth from './hooks/useAuth';
 
 export const App = () => {
@@ -26,6 +26,7 @@ export const App = () => {
 
       <Route path='/proyectos' element={<PrivateRoutes />} >
         <Route index element={<Projects />} />
+        <Route path='nuevo' element={<NewProject />} />
       </Route>
     </Routes>
   )

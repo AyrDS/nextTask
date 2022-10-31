@@ -5,12 +5,11 @@ import Swal from 'sweetalert2';
 import useAuth from '../hooks/useAuth';
 
 export const Login = () => {
-
    const { handleChange, email, password } = useForm({
       email: '',
       password: '',
    });
-
+   const navigate = useNavigate();
    const { setAuth } = useAuth();
 
    const handleSubmit = async e => {
@@ -30,6 +29,7 @@ export const Login = () => {
 
          localStorage.setItem('token', data.token);
          setAuth(data);
+         navigate('/proyectos');
       } catch (error) {
          return Swal.fire({
             title: 'Error',
