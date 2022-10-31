@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import useForm from '../hooks/useForm';
 import { Loader } from '../components';
+import clientAxios from '../config/clientAxios';
 
 export const NewPassword = () => {
    const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const NewPassword = () => {
    useEffect(() => {
       const confirmToken = async () => {
          try {
-            await axios(`${import.meta.env.VITE_API_URL}/users/reset-password/${token}`);
+            await clientAxios(`/users/reset-password/${token}`);
 
             setOk(true);
          } catch (error) {
@@ -53,7 +53,7 @@ export const NewPassword = () => {
       }
 
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users/reset-password/${token}`, { password });
+         const { data } = await clientAxios.post(`/users/reset-password/${token}`, { password });
 
          Swal.fire({
             text: data.msg,

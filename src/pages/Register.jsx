@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import validator from 'validator';
 import Swal from 'sweetalert2';
 import useForm from '../hooks/useForm';
-import axios from 'axios';
+import clientAxios from '../config/clientAxios';
 
 export const Register = () => {
 
@@ -54,7 +54,7 @@ export const Register = () => {
       }
 
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users`, { name, email, password });
+         const { data } = await clientAxios.post('/users', { name, email, password });
 
          Swal.fire({
             title: 'Usuario creado correctamente',

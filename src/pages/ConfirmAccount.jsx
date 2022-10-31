@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import clientAxios from '../config/clientAxios';
 
 export const ConfirmAccount = () => {
 
@@ -10,7 +10,7 @@ export const ConfirmAccount = () => {
    useEffect(() => {
       const confirmAccount = async () => {
          try {
-            await axios(`${import.meta.env.VITE_API_URL}/users/confirm/${token}`);
+            await clientAxios(`/users/confirm/${token}`);
 
             setOk(true);
          } catch (error) {

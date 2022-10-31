@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import clientAxios from '../config/clientAxios';
 import useForm from '../hooks/useForm';
 
 export const ResetPassword = () => {
@@ -22,7 +22,7 @@ export const ResetPassword = () => {
       }
 
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/users/reset-password`, { email });
+         const { data } = await clientAxios.post('/users/reset-password', { email });
 
          Swal.fire({
             text: `${data.msg}.`,
