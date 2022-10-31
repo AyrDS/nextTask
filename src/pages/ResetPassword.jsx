@@ -3,11 +3,14 @@ import Swal from 'sweetalert2';
 import clientAxios from '../config/clientAxios';
 import useForm from '../hooks/useForm';
 
+const initialFormResetPassword = {
+   email: '',
+
+}
+
 export const ResetPassword = () => {
 
-   const { email, handleChange } = useForm({
-      email: '',
-   });
+   const { email, handleChange } = useForm(initialFormResetPassword);
 
    const handleSubmit = async e => {
       e.preventDefault();

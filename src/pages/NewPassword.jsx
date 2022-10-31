@@ -5,15 +5,17 @@ import useForm from '../hooks/useForm';
 import { Loader } from '../components';
 import clientAxios from '../config/clientAxios';
 
+const initialFormNewPassword = {
+   password: '',
+   password2: ''
+}
+
 export const NewPassword = () => {
    const navigate = useNavigate();
    const { token } = useParams();
    const [ok, setOk] = useState(null);
    const [loading, setLoading] = useState(true);
-   const { handleChange, password, password2 } = useForm({
-      password: '',
-      password2: ''
-   });
+   const { handleChange, password, password2 } = useForm(initialFormNewPassword);
 
    useEffect(() => {
       const confirmToken = async () => {

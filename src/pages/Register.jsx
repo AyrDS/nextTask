@@ -4,15 +4,16 @@ import Swal from 'sweetalert2';
 import useForm from '../hooks/useForm';
 import clientAxios from '../config/clientAxios';
 
+const initialFormRegister = {
+   name: '',
+   email: '',
+   password: '',
+   password2: ''
+}
+
 export const Register = () => {
 
-   const { name, email, password, password2, handleChange, resetForm } = useForm({
-      name: '',
-      email: '',
-      password: '',
-      password2: ''
-   });
-
+   const { name, email, password, password2, handleChange, resetForm } = useForm(initialFormRegister);
 
    const handleSubmit = async e => {
       e.preventDefault();
