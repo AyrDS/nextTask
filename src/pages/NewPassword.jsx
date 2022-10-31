@@ -77,8 +77,7 @@ export const NewPassword = () => {
             title: 'Error',
             text: `${error.response.data.msg}.`,
             icon: 'error',
-            confirmButtonColor: '#0369a1',
-            timerProgressBar: true
+            confirmButtonColor: '#0369a1'
          });
       }
    }

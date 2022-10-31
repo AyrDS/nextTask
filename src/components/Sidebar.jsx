@@ -11,7 +11,7 @@ export const Sidebar = () => {
 
          <Link
             to='nuevo'
-            className='bg-sky-600 w-full p-3 text-white uppercase font-bold block mt-5 text-center rounded-lg hover:bg-sky-700 transition-all duration-300'
+            className='bg-sky-600 w-full p-3 text-white uppercase font-bold block mt-5 text-center rounded-lg hover:bg-sky-700 transition-colors'
          >
             Nuevo Proyecto
          </Link>

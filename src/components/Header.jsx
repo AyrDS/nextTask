@@ -18,7 +18,7 @@ export const Header = () => {
                <Link to='/proyectos' className="font-bold uppercase" > Proyectos</Link>
 
                <button
-                  className="text-white text-sm bg-red-600 p-3 rounded-md uppercase font-bold hover:bg-red-700 transition-all duration-300"
+                  className="text-white text-sm bg-red-600 p-3 rounded-md uppercase font-bold hover:bg-red-700 transition-colors"
                >
                   Cerrar Sesión</button>
             </div>
