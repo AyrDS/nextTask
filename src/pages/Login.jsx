@@ -1,11 +1,50 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import clientAxios from '../config/clientAxios';
+import useForm from '../hooks/useForm';
+import Swal from 'sweetalert2';
+import useAuth from '../hooks/useAuth';
 
 export const Login = () => {
+
+   const { handleChange, email, password } = useForm({
+      email: '',
+      password: '',
+   });
+
+   const { setAuth } = useAuth();
+
+   const handleSubmit = async e => {
+      e.preventDefault();
+
+      if ([email, password].includes('')) {
+         return Swal.fire({
+            title: 'Error',
+            text: 'Todos los campos son obligatorios.',
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         })
+      }
+
+      try {
+         const { data } = await clientAxios.post('/users/login', { email, password });
+
+         localStorage.setItem('token', data.token);
+         setAuth(data);
+      } catch (error) {
+         return Swal.fire({
+            title: 'Error',
+            text: `${error.response.data.msg}.`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         })
+      }
+   }
+
    return (
       <>
          <h1 className="text-sky-600 font-black text-2xl" >Inciar Sesión</h1>
 
-         <form className="my-5 bg-white shadow rounded-lg p-8" >
+         <form className="my-5 bg-white shadow rounded-lg p-8" onSubmit={handleSubmit} >
             <div className="my-5" >
                <label
                   htmlFor="email"
@@ -18,6 +57,9 @@ export const Login = () => {
                   placeholder="ejemplo@email.com"
                   id="email"
                   className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                  name='email'
+                  onChange={handleChange}
+                  value={email}
                />
             </div>
 
@@ -33,6 +75,9 @@ export const Login = () => {
                   placeholder="Tu contraseña"
                   id="password"
                   className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+                  name='password'
+                  onChange={handleChange}
+                  value={password}
                />
             </div>
 
