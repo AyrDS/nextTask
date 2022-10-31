@@ -14,6 +14,7 @@ export const ProjectsProvider = ({ children }) => {
 
    const [projects, setProjects] = useState([]);
    const [project, setProject] = useState({});
+   const [modalFormTask, setModalFormTask] = useState(false);
 
    useEffect(() => {
       const getProjects = async () => {
@@ -181,7 +182,45 @@ export const ProjectsProvider = ({ children }) => {
             navigate(`/proyectos`);
          }, 2001);
       } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `Error inesperado.`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
+   }
 
+   const handleModalTask = () => {
+      setModalFormTask(!modalFormTask);
+   }
+
+   const newTask = async task => {
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         const { data } = await clientAxios.post('/tasks', task, config);
+
+         const projectUpdated = { ...project };
+         projectUpdated.tasks = [...project.tasks, data];
+
+         setProject(projectUpdated);
+         setModalFormTask(false);
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `Error inesperado.`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
       }
    }
 
@@ -190,10 +229,13 @@ export const ProjectsProvider = ({ children }) => {
          value={{
             project,
             projects,
+            modalFormTask,
             deleteProject,
             editProject,
             getProject,
             newProject,
+            handleModalTask,
+            newTask,
          }}
       >
          {children}

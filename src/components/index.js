@@ -5,3 +5,5 @@ export * from './Sidebar';
 export * from './FormProject';
 export * from './PreviewProject';
 export * from './Loader';
+export * from './ModalFormTask';
+export * from './Task';

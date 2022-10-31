@@ -4,9 +4,11 @@ export const Header = () => {
    return (
       <header className="px-4 py-5 bg-white border-b">
          <div className="flex flex-col gap-7 md:gap-0 md:flex-row md:justify-between">
-            <h2 className="text-4xl text-sky-600 font-black text-center" >
-               UpTask
-            </h2>
+            <Link to='/proyectos'>
+               <h2 className="text-4xl text-sky-600 font-black text-center" >
+                  NextTask
+               </h2>
+            </Link >
 
             <input
                type="search"
