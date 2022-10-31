@@ -1,8 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from 'react';
 
 
-const useForm = (formData = {}) => {
+const useForm = (formData) => {
    const [formValues, setFormValues] = useState(formData);
+
+   useEffect(() => {
+      setFormValues(formData);
+   }, [formData]);
 
    const handleChange = e => {
       setFormValues({

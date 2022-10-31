@@ -1,20 +1,22 @@
+import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useForm from '../hooks/useForm';
 import useProjects from '../hooks/useProjects';
 
+const initialForm = {
+   name: '',
+   description: '',
+   deadline: '',
+   client: ''
+}
+
 export const FormProject = () => {
-
-   const { name, description, deadline, client, handleChange, resetForm } = useForm({
-      name: '',
-      description: '',
-      deadline: '',
-      client: ''
-   });
-   const { newProject } = useProjects();
-
+   const { id } = useParams();
+   const { newProject, project, editProject } = useProjects();
+   const { name, description, deadline, client, handleChange, resetForm } = useForm(id ? project : initialForm);
    const handleSubmit = async e => {
       e.preventDefault();
-      
+
       if ([name, description, deadline, client].includes('')) {
          return Swal.fire({
             title: 'Error',
@@ -24,7 +26,12 @@ export const FormProject = () => {
          });
       }
 
-      await newProject({ name, description, deadline, client });
+      if (id) {
+         await editProject({ name, description, deadline, client, id: project._id })
+      } else {
+         await newProject({ name, description, deadline, client });
+      }
+
       resetForm();
    }
 
@@ -110,7 +117,7 @@ export const FormProject = () => {
 
          <input
             type="submit"
-            value="Crear proyecto"
+            value={id ? "Actualizar Proyecto" : "Crear proyecto"}
             className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors"
          />
       </form>
