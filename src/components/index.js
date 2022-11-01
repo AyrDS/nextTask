@@ -7,3 +7,4 @@ export * from './PreviewProject';
 export * from './Loader';
 export * from './ModalFormTask';
 export * from './Task';
+export * from './FormCollaborator';

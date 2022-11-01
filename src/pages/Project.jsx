@@ -74,6 +74,17 @@ export const Project = () => {
                }
             </div>
 
+            <div className='flex items-center justify-between mt-10' >
+               <p className='font-bold text-xl' >Colaboradores</p>
+               <Link
+                  to={`/proyectos/nuevo-colaborador/${project._id}`}
+                  className='text-gray-500 hover:text-black uppercase font-bold'
+               >
+                  Añadir
+               </Link>
+            </div>
+
+
             <ModalFormularioTarea />
          </>
    )
