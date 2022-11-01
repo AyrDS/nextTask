@@ -8,3 +8,4 @@ export * from './Loader';
 export * from './ModalFormTask';
 export * from './Task';
 export * from './FormCollaborator';
+export * from './Collaborator';

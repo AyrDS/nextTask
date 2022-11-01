@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Loader, Task } from '../components';
+import { Link, useParams } from 'react-router-dom';
+import { Collaborator, Loader, Task } from '../components';
 import ModalFormularioTarea from '../components/ModalFormTask';
 import useProjects from '../hooks/useProjects';
 
@@ -8,7 +8,6 @@ export const Project = () => {
 
    const { id } = useParams();
    const { getProject, project, handleModalTask } = useProjects();
-   const navigate = useNavigate();
    const [loading, setLoading] = useState(true);
    const [ok, setOk] = useState(true);
 
@@ -84,6 +83,15 @@ export const Project = () => {
                </Link>
             </div>
 
+            <div className='bg-white shadow mt-10 rounded-lg' >
+               {
+                  project.collaborators.length
+                     ? project.collaborators.map(c => (
+                        <Collaborator key={c.uid} collaborator={c} />
+                     ))
+                     : <p className='text-center my-5 p-10' >No hay colaboradores en este proyecto</p>
+               }
+            </div>
 
             <ModalFormularioTarea />
          </>

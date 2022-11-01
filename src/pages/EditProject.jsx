@@ -30,6 +30,9 @@ export const EditProject = () => {
          showDenyButton: true,
          confirmButtonColor: '#0369a1',
          confirmButtonText: 'Si',
+         customClass: {
+            confirmButton: 'confirmBtn'
+         },
          focusConfirm: false
       }).then(({ value }) => {
          if (!value) return;

@@ -368,6 +368,41 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
+   const deleteCollaborator = async (uid) => {
+      Swal.showLoading();
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         const { data } = await clientAxios.post(`/projects/del-collaborators/${project._id}`, { uid }, config);
+
+         const projectUpdated = { ...project }
+         projectUpdated.collaborators = projectUpdated.collaborators.filter(col => col.uid !== uid);
+         setProject(projectUpdated);
+
+         setCollaborator({});
+         Swal.fire({
+            title: `${data.msg}`,
+            icon: 'success',
+            confirmButtonColor: '#0369a1'
+         });
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `${error.response.data.msg}`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
+   }
+
    return (
       <Provider
          value={{
@@ -377,6 +412,7 @@ export const ProjectsProvider = ({ children }) => {
             projects,
             task,
             addCollaborator,
+            deleteCollaborator,
             deleteProject,
             deleteTask,
             editProject,
