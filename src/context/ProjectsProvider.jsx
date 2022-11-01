@@ -16,6 +16,7 @@ export const ProjectsProvider = ({ children }) => {
    const [project, setProject] = useState({});
    const [modalFormTask, setModalFormTask] = useState(false);
    const [task, setTask] = useState({});
+   const [collaborator, setCollaborator] = useState({});
 
    useEffect(() => {
       const getProjects = async () => {
@@ -301,16 +302,81 @@ export const ProjectsProvider = ({ children }) => {
    }
 
    const newCollaborator = async email => {
-      console.log(email);
+      Swal.showLoading();
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         const { data } = await clientAxios.post('/projects/collaborators', { email }, config);
+         setCollaborator(data);
+         Swal.close();
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `${error.response.data.msg}`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
+   }
+
+   const addCollaborator = async email => {
+      Swal.showLoading();
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         const { data } = await clientAxios.post(`/projects/collaborators/${project._id}`, email, config);
+         setCollaborator({});
+         Swal.fire({
+            title: 'Colaborador añadido',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            timerProgressBar: true,
+            customClass: {
+               timerProgressBar: 'timer'
+            }
+         });
+
+         setTimeout(() => {
+            navigate(`/proyectos/${project._id}`);
+         }, 2001);
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `${error.response.data.msg}`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
    }
 
    return (
       <Provider
          value={{
+            collaborator,
             modalFormTask,
             project,
             projects,
             task,
+            addCollaborator,
             deleteProject,
             deleteTask,
             editProject,
