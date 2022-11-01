@@ -143,8 +143,10 @@ export const ProjectsProvider = ({ children }) => {
          const { data } = await clientAxios(`/projects/${id}`, config);
          data.deadline = data.deadline.split('T')[0];
          setProject(data);
+         return data;
       } catch (error) {
-         console.log(error);
+         // console.log(error);
+         return error;
       }
    }
 
