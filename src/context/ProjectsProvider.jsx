@@ -265,6 +265,41 @@ export const ProjectsProvider = ({ children }) => {
       setModalFormTask(true);
    }
 
+   const deleteTask = async id => {
+      Swal.showLoading();
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         await clientAxios.delete(`/tasks/${id}`, config);
+
+         const projectUpdated = { ...project }
+         projectUpdated.tasks = projectUpdated.tasks.filter(taskState => taskState._id !== id);
+
+         setProject(projectUpdated);
+         setTask({});
+         Swal.fire({
+            title: 'Tarea eliminada',
+            icon: 'success',
+            confirmButtonColor: '#0369a1'
+         });
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `Error inesperado.`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
+   }
+
    return (
       <Provider
          value={{
@@ -273,6 +308,7 @@ export const ProjectsProvider = ({ children }) => {
             projects,
             task,
             deleteProject,
+            deleteTask,
             editProject,
             editTask,
             getProject,
