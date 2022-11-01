@@ -18,7 +18,7 @@ export const PrivateRoutes = () => {
                   <div className='bg-gray-100' >
                      <Header />
 
-                     <div className='md:flex md:min-h-screen' >
+                     <div className='md:flex' >
                         <Sidebar />
 
                         <main className='p-10 flex-1' >

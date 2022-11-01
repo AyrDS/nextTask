@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { formatDate } from '../helpers/formatDate';
+import useAdmin from '../hooks/useAdmin';
 import useProjects from '../hooks/useProjects';
 
 export const Task = ({ task }) => {
 
    const { description, priority, name, deadline, state, _id } = task;
 
-   const { handleEditTask, deleteTask } = useProjects();
+   const { handleEditTask, deleteTask, setTaskState } = useProjects();
    const [colorPriority, setColorPriority] = useState('');
+
+   const admin = useAdmin();
 
    useEffect(() => {
       switch (priority) {
@@ -58,33 +61,33 @@ export const Task = ({ task }) => {
          </div>
 
          <div className="flex gap-2" >
-            <button
-               className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-               onClick={() => handleEditTask(task)}
-            >
-               Editar
-            </button>
-
             {
-               state
-                  ? <button
-                     className="bg-sky-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-                  >
-                     Completa
-                  </button>
-                  : <button
-                     className="bg-gray-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-                  >
-                     Incompleta
-                  </button>
+               admin &&
+               <button
+                  className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                  onClick={() => handleEditTask(task)}
+               >
+                  Editar
+               </button>
             }
 
             <button
-               className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-               onClick={handleDelete}
+               className={`${state ? 'bg-sky-600' : 'bg-gray-600'} px-4 py-3 text-white uppercase font-bold text-sm rounded-lg`}
+               onClick={() => setTaskState(_id)}
             >
-               Eliminar
+               {state ? 'Completa' : 'Incompleta'}
             </button>
+
+
+            {
+               admin &&
+               <button
+                  className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                  onClick={handleDelete}
+               >
+                  Eliminar
+               </button>
+            }
          </div>
       </div>
    )

@@ -1,11 +1,28 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
-export const PreviewProject = ({ name, _id, client }) => {
+export const PreviewProject = ({ name, _id, client, description, author }) => {
+
+   const { auth } = useAuth();
+
    return (
-      <div className='border-b p-5 flex' >
-         <p className='flex-1'>
-            {name} <span className='text-sm text-gray-500 uppercase'>{client}</span>
-         </p>
+      <div className='border-b p-5 flex justify-between items-center' >
+         <div className='flex items-center gap-5'>
+            <div>
+               <p className='font-bold text-xl' >{name}</p>
+               <p className='text-base my-3' >{description}</p>
+               <p className='text-sm' >Cliente: <span className='font-bold' >{client}</span></p>
+            </div>
+
+            {
+               auth.uid !== author &&
+               <p
+                  className='p-1 text-xs rounded-lg text-white bg-green-500 font-bold uppercase text-center'
+               >
+                  Colaborador
+               </p>
+            }
+         </div>
 
          <Link
             to={`${_id}`}
