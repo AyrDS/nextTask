@@ -15,6 +15,7 @@ export const ProjectsProvider = ({ children }) => {
    const [projects, setProjects] = useState([]);
    const [project, setProject] = useState({});
    const [modalFormTask, setModalFormTask] = useState(false);
+   const [task, setTask] = useState({});
 
    useEffect(() => {
       const getProjects = async () => {
@@ -193,6 +194,7 @@ export const ProjectsProvider = ({ children }) => {
 
    const handleModalTask = () => {
       setModalFormTask(!modalFormTask);
+      setTask({});
    }
 
    const newTask = async task => {
@@ -224,17 +226,57 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
+   const editTask = async task => {
+
+      try {
+         const token = localStorage.getItem('token');
+         if (!token) return;
+
+         const config = {
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`
+            }
+         }
+
+         const { data } = await clientAxios.put(`/tasks/${task.id}`, task, config);
+
+         const projectUpdated = { ...project }
+         projectUpdated.tasks = projectUpdated.tasks.map(taskState => taskState._id === data._id ? data : taskState);
+
+         setProject(projectUpdated)
+         setModalFormTask(false);
+         setTask({});
+      } catch (error) {
+         Swal.fire({
+            title: 'Error',
+            text: `Error inesperado.`,
+            icon: 'error',
+            confirmButtonColor: '#0369a1'
+         });
+      }
+   }
+
+   const handleEditTask = async task => {
+      task.deadline = task.deadline.split('T')[0];
+      setTask(task);
+      setModalFormTask(true);
+   }
+
    return (
       <Provider
          value={{
+            modalFormTask,
             project,
             projects,
-            modalFormTask,
+            task,
             deleteProject,
             editProject,
+            editTask,
             getProject,
-            newProject,
+            handleEditTask,
             handleModalTask,
+            newProject,
             newTask,
          }}
       >

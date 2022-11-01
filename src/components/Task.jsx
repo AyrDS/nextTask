@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { formatDate } from "../helpers/formatDate";
+import useProjects from "../hooks/useProjects";
 
-export const Task = ({ description, priority, name, deadline, state, _id }) => {
+export const Task = ({ task }) => {
 
+   const { description, priority, name, deadline, state, _id } = task;
+
+   const { handleEditTask } = useProjects();
    const [colorPriority, setColorPriority] = useState('');
 
    useEffect(() => {
@@ -29,13 +33,14 @@ export const Task = ({ description, priority, name, deadline, state, _id }) => {
          <div>
             <p className="mb-2 text-xl" >{name}</p>
             <p className="mb-2 text-sm text-gray-500 uppercase" >{description}</p>
-            <p className="mb-2 text-xl" >{formatDate(deadline)}</p>
+            <p className="mb-2 text-sm" >{formatDate(deadline)}</p>
             <p className={`mb-2 ${colorPriority} font-bold`} >Prioridad: {priority}</p>
          </div>
 
          <div className="flex gap-2" >
             <button
                className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+               onClick={() => handleEditTask(task)}
             >
                Editar
             </button>

@@ -14,8 +14,8 @@ const formInitialTask = {
 
 const ModalFormularioTarea = () => {
 
-   const { modalFormTask, handleModalTask, newTask } = useProjects();
-   const { handleChange, description, name, priority, deadline, resetForm } = useForm(formInitialTask);
+   const { modalFormTask, handleModalTask, newTask, task, editTask } = useProjects();
+   const { handleChange, description, name, priority, deadline, resetForm } = useForm(Object.entries(task).length === 0 ? formInitialTask : task);
    const { id } = useParams();
 
    const handleSumbmit = async e => {
@@ -30,7 +30,12 @@ const ModalFormularioTarea = () => {
          });
       }
 
-      await newTask({ description, name, priority, deadline, project: id });
+      if (task._id) {
+         await editTask({ description, name, priority, deadline, project: id, id: task._id });
+      } else {
+         await newTask({ description, name, priority, deadline, project: id });
+      }
+
       resetForm();
    }
 
@@ -52,7 +57,6 @@ const ModalFormularioTarea = () => {
                   />
                </Transition.Child>
 
-               {/* This element is to trick the browser into centering the modal contents. */}
                <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
                   &#8203;
                </span>
@@ -86,7 +90,9 @@ const ModalFormularioTarea = () => {
                      <div className="sm:flex sm:items-start">
                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                            <Dialog.Title as="h3" className="text-lg leading-6 font-bold text-gray-900">
-                              Crear tarea
+                              {
+                                 task._id ? 'Editar Tarea' : 'Crear tarea'
+                              }
                            </Dialog.Title>
                            <form className='my-10' onSubmit={handleSumbmit} >
 
@@ -168,7 +174,7 @@ const ModalFormularioTarea = () => {
                               <input
                                  type="submit"
                                  className='bg-sky-600 hover:bg-sky-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm'
-                                 value='Crear tarea'
+                                 value={task._id ? 'Guardar cambios' : 'Crear tarea'}
                               />
 
                            </form>

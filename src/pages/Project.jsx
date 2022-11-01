@@ -60,7 +60,7 @@ export const Project = () => {
             {
                tasks?.length
                   ? tasks.map(task => (
-                     <Task key={task._id} {...task} />
+                     <Task key={task._id} task={task} />
                   ))
                   : <p className='text-center my-5 p-10' >No hay tareas en este proyecto</p>
             }
