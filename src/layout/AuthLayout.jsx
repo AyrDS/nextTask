@@ -1,6 +1,14 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Navigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 export const AuthLayout = () => {
+
+   const { auth } = useAuth();
+
+   if (auth.uid) {
+      return <Navigate to='/proyectos' replace />
+   }
+
    return (
       <>
          <main className='container mx-auto mt-5 md:mt-20 p-5 md:flex md:justify-center' >
