@@ -300,6 +300,10 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
+   const newCollaborator = async email => {
+      console.log(email);
+   }
+
    return (
       <Provider
          value={{
@@ -314,6 +318,7 @@ export const ProjectsProvider = ({ children }) => {
             getProject,
             handleEditTask,
             handleModalTask,
+            newCollaborator,
             newProject,
             newTask,
          }}
