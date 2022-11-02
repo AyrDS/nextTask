@@ -1,6 +1,11 @@
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom';
+import useProjects from '../hooks/useProjects';
+import { Searcher } from './';
 
 export const Header = () => {
+
+   const { handleSearcher, searcher } = useProjects();
+
    return (
       <header className="px-4 py-5 bg-white border-b">
          <div className="flex flex-col gap-7 md:gap-0 md:flex-row md:justify-between">
@@ -13,6 +18,7 @@ export const Header = () => {
             <div className="flex flex-col md:flex-row items-center gap-4" >
                <button
                   className="font-bold uppercase"
+                  onClick={handleSearcher}
                >
                   Buscar Proyecto
                </button>
@@ -22,7 +28,10 @@ export const Header = () => {
                <button
                   className="text-white text-sm bg-red-600 p-3 rounded-md uppercase font-bold hover:bg-red-700 transition-colors"
                >
-                  Cerrar Sesión</button>
+                  Cerrar Sesión
+               </button>
+
+               <Searcher />
             </div>
          </div>
       </header>

@@ -17,6 +17,7 @@ export const ProjectsProvider = ({ children }) => {
    const [modalFormTask, setModalFormTask] = useState(false);
    const [task, setTask] = useState({});
    const [collaborator, setCollaborator] = useState({});
+   const [searcher, setSearcher] = useState(false);
 
    useEffect(() => {
       const getProjects = async () => {
@@ -403,6 +404,10 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
+   const handleSearcher = () => {
+      setSearcher(!searcher);
+   }
+
    const setTaskState = async id => {
       try {
          const token = localStorage.getItem('token');
@@ -439,6 +444,7 @@ export const ProjectsProvider = ({ children }) => {
             project,
             projects,
             task,
+            searcher,
             addCollaborator,
             deleteCollaborator,
             deleteProject,
@@ -452,6 +458,7 @@ export const ProjectsProvider = ({ children }) => {
             newProject,
             newTask,
             setTaskState,
+            handleSearcher,
          }}
       >
          {children}

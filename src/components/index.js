@@ -9,3 +9,4 @@ export * from './ModalFormTask';
 export * from './Task';
 export * from './FormCollaborator';
 export * from './Collaborator';
+export * from './Searcher';
