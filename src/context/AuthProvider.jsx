@@ -1,5 +1,4 @@
 import { useState, useEffect, createContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import clientAxios from '../config/clientAxios';
 
 export const AuthContext = createContext();
@@ -9,7 +8,6 @@ export const AuthProvider = ({ children }) => {
 
    const [auth, setAuth] = useState({});
    const [isLoading, setIsLoading] = useState(true);
-   const navigate = useNavigate();
 
    useEffect(() => {
       const authUser = async () => {
@@ -28,7 +26,6 @@ export const AuthProvider = ({ children }) => {
             const { data } = await clientAxios('/users/profile', config);
 
             setAuth(data);
-            // navigate('/proyectos');
          } catch (error) {
             setAuth({});
          }
@@ -39,11 +36,16 @@ export const AuthProvider = ({ children }) => {
       authUser();
    }, []);
 
+   const closeAppAuth = () => {
+      setAuth({});
+   }
+
    return (
       <Provider value={{
          auth,
          isLoading,
          setAuth,
+         closeAppAuth
       }}>
          {children}
       </Provider>

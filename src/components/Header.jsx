@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 import useProjects from '../hooks/useProjects';
 import { Searcher } from './';
 
 export const Header = () => {
 
-   const { handleSearcher, searcher } = useProjects();
+   const { handleSearcher, closeAppProjects } = useProjects();
+   const { closeAppAuth } = useAuth();
+
+   const handleOut = () => {
+      closeAppAuth();
+      closeAppProjects();
+      localStorage.removeItem('token');
+   }
 
    return (
       <header className="px-4 py-5 bg-white border-b">
@@ -27,6 +35,7 @@ export const Header = () => {
 
                <button
                   className="text-white text-sm bg-red-600 p-3 rounded-md uppercase font-bold hover:bg-red-700 transition-colors"
+                  onClick={handleOut}
                >
                   Cerrar Sesión
                </button>

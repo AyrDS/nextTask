@@ -76,6 +76,13 @@ export const ProjectsProvider = ({ children }) => {
       })
    }, [socket, project]);
 
+   const closeAppProjects = () => {
+      setProject({});
+      setProjects([]);
+      setCollaborator({});
+      setTask({});
+   }
+
    const editProject = async project => {
       Swal.showLoading();
 
@@ -528,6 +535,7 @@ export const ProjectsProvider = ({ children }) => {
             newTask,
             setTaskState,
             handleSearcher,
+            closeAppProjects,
          }}
       >
          {children}

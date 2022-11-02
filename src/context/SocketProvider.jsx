@@ -7,7 +7,7 @@ const { Provider } = SocketContext;
 
 export const SocketProvider = ({ children }) => {
 
-   const { socket, connectSocket, disconnectSocket } = useSocket('http://localhost:8080');
+   const { socket, connectSocket, disconnectSocket } = useSocket(import.meta.env.VITE_SOCKET_URL);
    const { auth } = useAuth();
 
    useEffect(() => {
