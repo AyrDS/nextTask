@@ -47,7 +47,7 @@ export const Task = ({ task }) => {
       }).then(({ value }) => {
          if (!value) return;
 
-         deleteTask(_id)
+         deleteTask(task);
       })
    }
 

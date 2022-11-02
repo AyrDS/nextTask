@@ -4,11 +4,13 @@ import { Collaborator, Loader, Task } from '../components';
 import ModalFormularioTarea from '../components/ModalFormTask';
 import useAdmin from '../hooks/useAdmin';
 import useProjects from '../hooks/useProjects';
+import useSocketContext from '../hooks/useSocketContext';
 
 export const Project = () => {
 
    const { id } = useParams();
    const { getProject, project, handleModalTask } = useProjects();
+   const { socket } = useSocketContext();
    const [loading, setLoading] = useState(true);
    const [ok, setOk] = useState(true);
 
@@ -26,6 +28,11 @@ export const Project = () => {
 
       callGetProject();
    }, []);
+
+   useEffect(() => {
+      socket?.emit('open-project', id);
+   }, [socket]);
+
 
    const { name, tasks } = project;
 

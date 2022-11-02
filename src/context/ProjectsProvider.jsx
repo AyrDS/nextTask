@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import clientAxios from '../config/clientAxios';
 import useAuth from '../hooks/useAuth';
+import useSocketContext from '../hooks/useSocketContext';
 
 export const ProjectsContext = createContext();
 const { Provider } = ProjectsContext;
@@ -11,6 +12,7 @@ export const ProjectsProvider = ({ children }) => {
 
    const navigate = useNavigate();
    const { auth } = useAuth();
+   const { socket } = useSocketContext();
 
    const [projects, setProjects] = useState([]);
    const [project, setProject] = useState({});
@@ -41,6 +43,38 @@ export const ProjectsProvider = ({ children }) => {
 
       getProjects();
    }, [auth]);
+
+   useEffect(() => {
+      socket?.on('task-added', newTask => {
+         if (newTask.project === project._id) {
+            newTaskSocket(newTask);
+         }
+      })
+   }, [socket, project]);
+
+   useEffect(() => {
+      socket?.on('task-deleted', task => {
+         if (task.project === project._id) {
+            deletedTask(task);
+         }
+      })
+   }, [socket, project]);
+
+   useEffect(() => {
+      socket?.on('task-updated', task => {
+         if (task.project === project._id) {
+            updatedTask(task);
+         }
+      })
+   }, [socket, project]);
+
+   useEffect(() => {
+      socket?.on('task-state', task => {
+         if (task.project._id === project._id) {
+            setStateSocket(task);
+         }
+      })
+   }, [socket, project]);
 
    const editProject = async project => {
       Swal.showLoading();
@@ -216,10 +250,12 @@ export const ProjectsProvider = ({ children }) => {
          const { data } = await clientAxios.post('/tasks', task, config);
 
          const projectUpdated = { ...project };
-         projectUpdated.tasks = [...project.tasks, data];
+         projectUpdated.tasks = [...projectUpdated.tasks, data];
 
          setProject(projectUpdated);
          setModalFormTask(false);
+
+         socket?.emit('new-task', data);
       } catch (error) {
          Swal.fire({
             title: 'Error',
@@ -250,6 +286,7 @@ export const ProjectsProvider = ({ children }) => {
 
          setProject(projectUpdated)
          setModalFormTask(false);
+         socket?.emit('update-task', data)
          setTask({});
       } catch (error) {
          Swal.fire({
@@ -267,7 +304,7 @@ export const ProjectsProvider = ({ children }) => {
       setModalFormTask(true);
    }
 
-   const deleteTask = async id => {
+   const deleteTask = async task => {
       Swal.showLoading();
       try {
          const token = localStorage.getItem('token');
@@ -280,12 +317,14 @@ export const ProjectsProvider = ({ children }) => {
             }
          }
 
-         await clientAxios.delete(`/tasks/${id}`, config);
+         await clientAxios.delete(`/tasks/${task._id}`, config);
 
          const projectUpdated = { ...project }
-         projectUpdated.tasks = projectUpdated.tasks.filter(taskState => taskState._id !== id);
+         projectUpdated.tasks = projectUpdated.tasks.filter(taskState => taskState._id !== task._id);
 
          setProject(projectUpdated);
+
+         socket?.emit('delete-task', task);
          setTask({});
          Swal.fire({
             title: 'Tarea eliminada',
@@ -404,10 +443,6 @@ export const ProjectsProvider = ({ children }) => {
       }
    }
 
-   const handleSearcher = () => {
-      setSearcher(!searcher);
-   }
-
    const setTaskState = async id => {
       try {
          const token = localStorage.getItem('token');
@@ -425,6 +460,7 @@ export const ProjectsProvider = ({ children }) => {
          projectUpdated.tasks = projectUpdated.tasks.map(taskState => taskState._id === data._id ? data : taskState);
 
          setProject(projectUpdated);
+         socket?.emit('set-state', data);
          setTask({});
       } catch (error) {
          Swal.fire({
@@ -434,6 +470,39 @@ export const ProjectsProvider = ({ children }) => {
             confirmButtonColor: '#0369a1'
          });
       }
+   }
+
+   const handleSearcher = () => {
+      setSearcher(!searcher);
+   }
+
+   //Socket IO
+   const newTaskSocket = task => {
+      const projectUpdated = { ...project };
+      projectUpdated.tasks = [...projectUpdated.tasks, task];
+
+      setProject(projectUpdated);
+   }
+
+   const deletedTask = task => {
+      const projectUpdated = { ...project }
+      projectUpdated.tasks = projectUpdated.tasks.filter(taskState => taskState._id !== task._id);
+
+      setProject(projectUpdated);
+   }
+
+   const updatedTask = task => {
+      const projectUpdated = { ...project }
+      projectUpdated.tasks = projectUpdated.tasks.map(taskState => taskState._id === task._id ? task : taskState);
+
+      setProject(projectUpdated)
+   }
+
+   const setStateSocket = task => {
+      const projectUpdated = { ...project };
+      projectUpdated.tasks = projectUpdated.tasks.map(taskState => taskState._id === task._id ? task : taskState);
+
+      setProject(projectUpdated);
    }
 
    return (
