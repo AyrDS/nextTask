@@ -52,10 +52,10 @@ export const Task = ({ task }) => {
    }
 
    return (
-      <div className=" border-b p-5 flex justify-between items-center" >
+      <div className=" border-b p-5 flex flex-col gap-3 md:flex-row md:gap-0 justify-between items-center" >
          <div className='flex flex-col items-start' >
             <p className="mb-2 text-xl" >{name}</p>
-            <p className="mb-2 text-sm text-gray-500 uppercase" >{description}</p>
+            <p className="mb-2 text-sm text-gray-500 uppercase md:w-4/5" >{description}</p>
             <p className="mb-2 text-sm" >{formatDate(deadline)}</p>
             <p className={`mb-2 ${colorPriority} font-bold`} >Prioridad: {priority}</p>
             {

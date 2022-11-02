@@ -25,7 +25,7 @@ export const Collaborator = ({ collaborator }) => {
    }
 
    return (
-      <div className="border-b p-5 flex justify-between items-center" >
+      <div className="border-b p-5 flex flex-col gap-5 md:flex-row md:gap-0 justify-between items-center" >
          <div>
             <p className="font-bold" >{name}</p>
             <p className="text-sm text-gray-700" >{email}</p>

@@ -33,8 +33,7 @@ export const Project = () => {
       socket?.emit('open-project', id);
    }, [socket]);
 
-
-   const { name, tasks } = project;
+   const { name, tasks, description } = project;
 
    if (loading) {
       return <Loader />
@@ -44,8 +43,8 @@ export const Project = () => {
       !ok
          ? <h1 className='font-black text-4xl text-center' >No puedes acceder a este proyecto</h1>
          : <>
-            <div className='flex justify-between items-center' >
-               <h1 className='font-black text-4xl' >{name}</h1>
+            <div className='flex flex-col gap-5 md:flex-row md:gap-0 justify-between items-center' >
+               <h1 className='font-black text-4xl text-center' >{name}</h1>
 
                {
                   admin &&
@@ -78,6 +77,11 @@ export const Project = () => {
                </button>
             }
 
+            {/* <p className='font-bold text-xl mt-10' >Descripción</p>
+            <div className='bg-white shadow mt-3 p-2 rounded-lg'>
+               <p>{description}</p>
+            </div> */}
+
             <p className='font-bold text-xl mt-10' >Tareas del Proyecto</p>
             <div className='bg-white shadow mt-10 rounded-lg' >
                {
@@ -92,7 +96,7 @@ export const Project = () => {
             {
                admin &&
                <>
-                  <div className='flex items-center justify-between mt-10' >
+                  <div className='flex flex-col gap-5 md:flex-row md:gap-0 items-center justify-between mt-10' >
                      <p className='font-bold text-xl' >Colaboradores</p>
                      <Link
                         to={`/proyectos/nuevo-colaborador/${project._id}`}
