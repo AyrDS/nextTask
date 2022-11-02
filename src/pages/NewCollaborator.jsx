@@ -35,10 +35,10 @@ export const NewCollaborator = () => {
          {
             collaborator?.uid &&
             <div className='flex justify-center mt-10' >
-               <div className='bg-white py-10 px-5 md:w-1/2 rounded-lg shadow' >
-                  <h2 className='text-center mb-10 text-2xl font-bold'>Resultado: </h2>
+               <div className='bg-white py-8 px-5 md:w-3/4 lg:w-1/2 rounded-lg shadow w-full' >
+                  <h2 className='text-center mb-8 lg:mb-10 text-2xl font-bold'>Resultado: </h2>
 
-                  <div className='flex justify-between items-center' >
+                  <div className='flex flex-col gap-5 lg:gap-0 lg:flex-row justify-between items-center' >
                      <p>{collaborator.name}</p>
 
                      <button

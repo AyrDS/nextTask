@@ -10,13 +10,13 @@ export const Header = () => {
                </h2>
             </Link >
 
-            <input
-               type="search"
-               placeholder="Buscar Proyecto"
-               className="rounded-lg lg:w-96 block p-2 border"
-            />
+            <div className="flex flex-col md:flex-row items-center gap-4" >
+               <button
+                  className="font-bold uppercase"
+               >
+                  Buscar Proyecto
+               </button>
 
-            <div className="flex items-center gap-4" >
                <Link to='/proyectos' className="font-bold uppercase" > Proyectos</Link>
 
                <button

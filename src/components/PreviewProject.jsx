@@ -6,8 +6,8 @@ export const PreviewProject = ({ name, _id, client, description, author }) => {
    const { auth } = useAuth();
 
    return (
-      <div className='border-b p-5 flex justify-between items-center' >
-         <div className='flex items-center gap-5'>
+      <div className='border-b p-5 flex flex-col md:flex-row justify-between items-center gap-5' >
+         <div className='flex flex-col md:flex-row items-center gap-5'>
             <div>
                <p className='font-bold text-xl' >{name}</p>
                <p className='text-base my-3' >{description}</p>

@@ -35,7 +35,7 @@ export const FormCollaborator = () => {
    }
 
    return (
-      <form className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow" onSubmit={handleSubmit} noValidate >
+      <form className="bg-white py-10 px-5 w-full md:w-3/4 lg:w-1/2 rounded-lg shadow" onSubmit={handleSubmit} noValidate >
          <div className="mb-5">
 
             <label
