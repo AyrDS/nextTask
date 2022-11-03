@@ -104,7 +104,7 @@ export const ProjectsProvider = ({ children }) => {
          Swal.fire({
             title: 'Proyecto Actualizado',
             icon: 'success',
-            timer: 2000,
+            timer: 1001,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -116,7 +116,7 @@ export const ProjectsProvider = ({ children }) => {
 
          setTimeout(() => {
             navigate(`/proyectos/${data._id}`);
-         }, 2001);
+         }, 1001);
       } catch (error) {
          Swal.fire({
             title: 'Error',
@@ -147,7 +147,7 @@ export const ProjectsProvider = ({ children }) => {
          Swal.fire({
             title: 'Proyecto creado',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -159,7 +159,7 @@ export const ProjectsProvider = ({ children }) => {
 
          setTimeout(() => {
             navigate('/proyectos');
-         }, 2001);
+         }, 1001);
       } catch (error) {
          console.log(error);
          Swal.fire({
@@ -214,7 +214,7 @@ export const ProjectsProvider = ({ children }) => {
          Swal.fire({
             title: 'Proyecto Eliminado',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -226,7 +226,7 @@ export const ProjectsProvider = ({ children }) => {
 
          setTimeout(() => {
             navigate(`/proyectos`);
-         }, 2001);
+         }, 1001);
       } catch (error) {
          Swal.fire({
             title: 'Error',
@@ -392,7 +392,7 @@ export const ProjectsProvider = ({ children }) => {
          Swal.fire({
             title: 'Colaborador añadido',
             icon: 'success',
-            timer: 2000,
+            timer: 1000,
             showConfirmButton: false,
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -404,7 +404,7 @@ export const ProjectsProvider = ({ children }) => {
 
          setTimeout(() => {
             navigate(`/proyectos/${project._id}`);
-         }, 2001);
+         }, 1001);
       } catch (error) {
          Swal.fire({
             title: 'Error',
