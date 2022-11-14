@@ -18,6 +18,6 @@ Cada usuario puede crear proyectos. Dentro cada uno, puede crear tareas e integr
 2. Instalar dependencias: `npm i`
 3. Levantar app: `npm run dev`
 
-<!-- #### [Link al repositorio del Backend aquí]() -->
+#### [Link al repositorio del Backend aquí](https://github.com/AyrDS/nextTask_back)
 
 ## [Link al demo aquí](https://nex-task.netlify.app/)
